@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Componente,Macroprocesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
+from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
 from rest_framework import generics
 
 class ComponenteList(generics.ListCreateAPIView):
@@ -11,11 +11,11 @@ class ComponenteDetail(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = ""
 
 class MacroprocessoList(generics.ListCreateAPIView):
-	queryset = Macroprocesso.objects.all()
+	queryset = MacroProcesso.objects.all()
 	serializer_class = ""
 
 class MacroProcessoDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Macroprocesso.objects.all()
+	queryset = MacroProcesso.objects.all()
 	serializer_class = ""
 
 class ParteList(generics.ListCreateAPIView):
