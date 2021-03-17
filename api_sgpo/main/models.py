@@ -1,7 +1,7 @@
 from django.db import models
 
 class Componente(models.Model):
-    nome = models.CharField(max_length = 200)
+    nome_componente = models.CharField(max_length = 200)
     objetivo = models.CharField(max_length = 200)
     codigo = models.CharField(max_length=64, default = '', unique = True)
     TIPO_CHOICES = (
@@ -11,16 +11,16 @@ class Componente(models.Model):
         )
     tipo = models.CharField(max_length = 200, choices = TIPO_CHOICES)
     def __str__(self):
-        return self.nome
+        return self.nome_componente
 
 class MacroProcesso(models.Model):
-    nome = models.CharField(max_length = 200)
+    nome_macroprocesso = models.CharField(max_length = 200)
     objetivo = models.CharField(max_length = 200)
     codigo = models.CharField(max_length=64, default = '', unique = True)
     componente_primario = models.ForeignKey('Componente', on_delete=models.CASCADE)
     componentes_vinculados = models.ManyToManyField('Componente', blank=True, related_name='componentesVincAcess')
     def __str__(self):
-        return self.nome
+        return self.nome_macroprocesso
 
 #------------------------------------------------------------------------------------------
 #  classe referente a PARTES INTERESSADAS
@@ -84,7 +84,7 @@ class Ferramenta(models.Model):
 # Classe referente a identificação do processo
 #------------------------------------------------------------------------------------------
 class Processo(models.Model):
-    nome = models.CharField(max_length = 200)
+    nome_processo = models.CharField(max_length = 200)
     gestorPrincipal = models.CharField(max_length = 200, null=True, blank=True)
     proprietario = models.CharField(max_length = 200, null=True, blank=True)
     fronteiraDe = models.CharField(max_length = 200)
@@ -103,7 +103,7 @@ class Processo(models.Model):
     entradaSaida = models.ManyToManyField(EntradaSaida)
     ferramenta = models.ManyToManyField(Ferramenta)
     def __str__(self):
-        return self.nome
+        return self.nome_processo
 
 
 
