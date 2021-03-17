@@ -1,4 +1,4 @@
-from .models import Componente,Macroprocesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
+from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
 from rest_framework import serializers
 
 class ComponenteSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class MacroprocessoSerializer(serializers.ModelSerializer):
 
     class Meta:
 
-        model = Macroprocesso
+        model = MacroProcesso
         fields = '__all__'
 
 class ParteSerializer(serializers.ModelSerializer):
