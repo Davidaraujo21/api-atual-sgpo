@@ -2,6 +2,26 @@ from django.shortcuts import render
 from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
 from .serializers import ComponenteSerializer, MacroprocessoSerializer, ParteSerializer, DirecionadorSerializer, EntradaSaidaSerializer, FerramentaSerializer, ProcessoSerializer
 from rest_framework import generics
+from rest_framework import filters
+from .pagination import CustomPagination
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from django_filters.rest_framework import DjangoFilterBackend
+from .filtros import ProcessoFilter
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+	return Response({
+			'processos': reverse('processos-list', request=request, format=format),
+			'macroprocessos': reverse('macroprocesso-list', request=request, format=format),
+			'componentes': reverse('componente-list', request=request, format=format),
+			'partes': reverse('partes-list', request=request, format=format),
+			'direcionadores': reverse('direcionadores-list', request=request, format=format),
+			'entradas-saidas': reverse('entradasaida-list', request=request, format=format),
+			'ferramentas': reverse('ferramentas-list', request=request, format=format)
+	})
 
 class ComponenteList(generics.ListCreateAPIView):
 	queryset = Componente.objects.all()
@@ -54,6 +74,10 @@ class FerramentaDetail(generics.RetrieveUpdateDestroyAPIView):
 class ProcessoList(generics.ListCreateAPIView):
 	queryset = Processo.objects.all()
 	serializer_class = ProcessoSerializer
+	filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+	filterset_class = ProcessoFilter
+	ordering_fields = ['nome_processo', 'codigo', 'data_inicial_versao_processo']
+	pagination_class = CustomPagination
 
 class ProcessoDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Processo.objects.all()

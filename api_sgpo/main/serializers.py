@@ -45,13 +45,18 @@ class FerramentaSerializer(serializers.ModelSerializer):
         model = Ferramenta
         fields = '__all__'
 
-class ProcessoSerializer(serializers.ModelSerializer):
 
+class ProcessoSerializer(serializers.ModelSerializer):
+    macroProcesso_primario = MacroprocessoSerializer()
+    macroProcessos_vinculados =  MacroprocessoSerializer(many=True)
+    parte = ParteSerializer(many=True)
+    direcionador = DirecionadorSerializer(many=True)
+    entradaSaida = EntradaSaidaSerializer(many=True)
+    ferramenta = FerramentaSerializer(many=True)
     class Meta:
 
         model = Processo
         fields = '__all__'
-
 
 
 

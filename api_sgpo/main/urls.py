@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
+	path('', views.api_root),
 	path('componentes/', views.ComponenteList.as_view(), name='componente-list'),
 	path('componentes/<int:pk>/', views.ComponenteDetail.as_view(), name='componente-detail'),
 
