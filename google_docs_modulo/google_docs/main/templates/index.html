@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gerar modelo de documento google docs</title>
+</head>
+<body>
+	<h1>Gerar modelo de documento google docs</h1>
+	{% if messages %}
+		<ul>
+		{% for message in messages%}
+			<li>{{message}}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	<form action="{% url 'url_getfiles' %}" method='POST'>
+		{%csrf_token%}
+		<label>
+		Dado customer name:
+		<input type="text" name="customer-name" required="" />
+		</label>
+		<br>
+		<label>
+		Pesquisar nome do template: 
+		<input type="text" name="template-name" required="">
+		</label>
+		<br>
+		<input type="submit" value="Gerar documento">
+	</form>
+</body>
+</html>
