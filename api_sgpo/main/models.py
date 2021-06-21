@@ -96,12 +96,12 @@ class Processo(models.Model):
     data_inicial_versao_processo =  models.DateTimeField('data inicial de publicacao do processo')
 
     # RELACIONAMENTOS COM AS DEMAIS CLASSES
-    macroProcesso_primario = models.ForeignKey(MacroProcesso,on_delete=models.CASCADE)
-    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, blank=True, related_name='macroProcesVincAcess')
-    parte = models.ManyToManyField(Parte)
-    direcionador = models.ManyToManyField(Direcionador)
-    entradaSaida = models.ManyToManyField(EntradaSaida)
-    ferramenta = models.ManyToManyField(Ferramenta)
+    macroProcesso_primario = models.ForeignKey(MacroProcesso,on_delete=models.CASCADE, related_name='macroProcessoPrim')
+    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, blank=True, related_name='macroProcessoVinc')
+    parte = models.ManyToManyField(Parte, related_name="processoParte")
+    direcionador = models.ManyToManyField(Direcionador, related_name='processoDirecionador')
+    entradaSaida = models.ManyToManyField(EntradaSaida, related_name='processoEntradaSaida')
+    ferramenta = models.ManyToManyField(Ferramenta, related_name='processoFerramenta')
     def __str__(self):
         return self.nome_processo
 

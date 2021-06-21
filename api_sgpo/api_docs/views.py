@@ -12,6 +12,7 @@ import datetime
 SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
 
 def viewConnection(request):
+	# Identificado erro quando requisita nova conexao após token estar vencido
 	creds = None
 
 	if os.path.exists('api_docs/token.json'):
