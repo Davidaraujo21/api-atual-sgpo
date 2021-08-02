@@ -18,7 +18,7 @@ class MacroProcesso(models.Model):
     objetivo = models.CharField(max_length = 200)
     codigo = models.CharField(max_length=64, default = '', unique = True)
     componente_primario = models.ForeignKey('Componente', on_delete=models.CASCADE)
-    componentes_vinculados = models.ManyToManyField('Componente', blank=True, related_name='componentesVincAcess')
+    componentes_vinculados = models.ManyToManyField('Componente', null=True, blank=True, related_name='componentesVincAcess')
     def __str__(self):
         return self.nome_macroprocesso
 
@@ -97,7 +97,7 @@ class Processo(models.Model):
 
     # RELACIONAMENTOS COM AS DEMAIS CLASSES
     macroProcesso_primario = models.ForeignKey(MacroProcesso,on_delete=models.CASCADE, related_name='macroProcessoPrim')
-    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, blank=True, related_name='macroProcessoVinc')
+    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, null=True, blank=True, related_name='macroProcessoVinc')
     parte = models.ManyToManyField(Parte, related_name="processoParte")
     direcionador = models.ManyToManyField(Direcionador, related_name='processoDirecionador')
     entradaSaida = models.ManyToManyField(EntradaSaida, related_name='processoEntradaSaida')
