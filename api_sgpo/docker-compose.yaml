@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+    db:
+        image: postgres:12.0-alpine
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=sgpo1234
+            - POSTGRES_DB=sgpo
+    api:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+
+
