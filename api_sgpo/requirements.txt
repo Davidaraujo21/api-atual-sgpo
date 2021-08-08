@@ -3,7 +3,6 @@ djangorestframework==3.12.4
 django-cors-headers==3.7.0
 django-filter==2.4.0
 djangorestframework-simplejwt==4.7.1
-psycopg2-binary>=2.8
 google-api-python-client 
 google-auth-httplib2 
 google-auth-oauthlib
