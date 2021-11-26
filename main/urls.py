@@ -14,6 +14,6 @@ router.register(r'processos', views.ProcessoViewSet)
 
 
 urlpatterns = [
-	path('', include(router.urls))
+	path('api/', include(router.urls))
 ]
 

@@ -18,7 +18,7 @@ class MacroProcesso(models.Model):
     objetivo = models.CharField(max_length = 200)
     codigo = models.CharField(max_length=64, default = '', unique = True)
     componente_primario = models.ForeignKey('Componente', on_delete=models.CASCADE)
-    componentes_vinculados = models.ManyToManyField('Componente', null=True, blank=True, related_name='componentesVincAcess')
+    componentes_vinculados = models.ManyToManyField('Componente', related_name='componentesVincAcess', blank=True)
     def __str__(self):
         return self.nome_macroprocesso
 
@@ -47,11 +47,11 @@ class Parte(models.Model):
 # Classe referente aos Direcionadores
 #------------------------------------------------------------------------------------------
 class Direcionador(models.Model):
-    Orgao = models.CharField(max_length = 200)
+    orgao = models.CharField(max_length = 200)
     numero = models.CharField(max_length = 200)
-    ano = models.DateField()
-    descricao = models.TextField()
-    url = models.URLField()
+    data = models.DateField()
+    descricao = models.TextField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
     TIPO_CHOICES = (
         ('L', 'Lei'),
         ('D', 'Decreto'),
@@ -62,7 +62,7 @@ class Direcionador(models.Model):
       )
     tipoParte = models.CharField(max_length = 2, choices = TIPO_CHOICES)
     def __str__(self):
-        return self.Orgao
+        return self.orgao
 
 #------------------------------------------------------------------------------------------
 #Classes referente a entradas e saídas
@@ -85,22 +85,22 @@ class Ferramenta(models.Model):
 #------------------------------------------------------------------------------------------
 class Processo(models.Model):
     nome_processo = models.CharField(max_length = 200)
-    gestorPrincipal = models.CharField(max_length = 200, null=True, blank=True)
-    proprietario = models.CharField(max_length = 200, null=True, blank=True)
+    gestorPrincipal = models.CharField(max_length = 200)
+    proprietario = models.CharField(max_length = 200)
     fronteiraDe = models.CharField(max_length = 200)
-    fronteirAte = models.CharField(max_length = 200)
-    objetivo = models.CharField(max_length = 200)
+    fronteiraAte = models.CharField(max_length = 200)
+    objetivo = models.TextField()
     codigo = models.CharField(max_length=64, default = '', unique = True)
-    proad = models.CharField(max_length = 12, null=True, blank=True)
+    proad = models.CharField(max_length = 12)
     versaop = models.IntegerField(default = 0)
-    data_inicial_versao_processo =  models.DateTimeField('data inicial de publicacao do processo')
-
+    data_inicial_versao_processo =  models.DateTimeField(auto_now=True)
+    # clientes = models.TextField()
     # RELACIONAMENTOS COM AS DEMAIS CLASSES
     macroProcesso_primario = models.ForeignKey(MacroProcesso,on_delete=models.CASCADE, related_name='macroProcessoPrim')
-    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, null=True, blank=True, related_name='macroProcessoVinc')
+    macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, related_name='macroProcessoVinc', blank=True)
     parte = models.ManyToManyField(Parte, related_name="processoParte")
     direcionador = models.ManyToManyField(Direcionador, related_name='processoDirecionador')
-    entradaSaida = models.ManyToManyField(EntradaSaida, related_name='processoEntradaSaida')
+    # entradaSaida = models.ManyToManyField(EntradaSaida, related_name='processoEntradaSaida')
     ferramenta = models.ManyToManyField(Ferramenta, related_name='processoFerramenta')
     def __str__(self):
         return self.nome_processo
