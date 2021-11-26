@@ -17,6 +17,7 @@ class MacroProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
 	queryset = MacroProcesso.objects.all()
 	read_serializer_class = MacroprocessoReadSerializer
 	write_serializer_class = MacroprocessoWriteSerializer
+	filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
 	filterset_class = MacroProcessoFilter
 	ordering_fields = ['nome_macroprocesso', 'codigo']
 	pagination_class = LimitOffsetPagination
@@ -41,7 +42,7 @@ class ProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
 	queryset = Processo.objects.all()
 	read_serializer_class = ProcessoReadSerializer
 	write_serializer_class = ProcessoWriteSerializer
-	filter_backends = [filters.OrderingFilter]
+	filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
 	filterset_class = ProcessoFilter
 	ordering_fields = ['nome_processo', 'codigo', 'data_inicial_versao_processo']
 	pagination_class = LimitOffsetPagination
