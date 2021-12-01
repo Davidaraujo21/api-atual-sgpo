@@ -7,6 +7,4 @@ psycopg2-binary>=2.8
 google-api-python-client 
 google-auth-httplib2 
 google-auth-oauthlib
-django-heroku==0.3.1
-gunicorn==20.1.0
 whitenoise==5.2.0

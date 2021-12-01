@@ -39,7 +39,7 @@ class FerramentaViewSet(viewsets.ModelViewSet):
 	serializer_class = FerramentaSerializer
 
 class ProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
-	queryset = Processo.objects.all()
+	queryset = Processo.objects.prefetch_related("macroProcesso_primario").prefetch_related("macroProcessos_vinculados").prefetch_related("parte").prefetch_related("direcionador").prefetch_related("ferramenta").all()
 	read_serializer_class = ProcessoReadSerializer
 	write_serializer_class = ProcessoWriteSerializer
 	filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
