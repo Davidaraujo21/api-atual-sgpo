@@ -80,6 +80,17 @@ class Ferramenta(models.Model):
     def __str__(self):
         return self.descricao
 
+
+class Cliente(models.Model):
+    nome = models.CharField(max_length = 200)
+    TIPO_CHOICES = (
+        ('Pessoa', 'Pessoa'),
+        ('Unidade', 'Unidade')
+    )
+    tipoCliente = models.CharField(max_length=7, choices=TIPO_CHOICES)
+    def __str__(self):
+        return self.nome
+
 #------------------------------------------------------------------------------------------
 # Classe referente a identificação do processo
 #------------------------------------------------------------------------------------------
@@ -94,7 +105,8 @@ class Processo(models.Model):
     proad = models.CharField(max_length = 12)
     versaop = models.IntegerField(default = 0)
     data_inicial_versao_processo =  models.DateTimeField(auto_now=True)
-    # clientes = models.TextField()
+    etapas = models.TextField()
+    clientes = models.ManyToManyField(Cliente, related_name='cliente', blank=True)
     # RELACIONAMENTOS COM AS DEMAIS CLASSES
     macroProcesso_primario = models.ForeignKey(MacroProcesso,on_delete=models.CASCADE, related_name='macroProcessoPrim')
     macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, related_name='macroProcessoVinc', blank=True)
