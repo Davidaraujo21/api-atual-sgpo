@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo
-from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSaidaSerializer, FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer
+from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo, Cliente
+from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSaidaSerializer,FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer, ClienteSerializer
 from rest_framework import filters, viewsets, permissions
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -37,6 +37,10 @@ class EntradaSaidaViewSet(viewsets.ModelViewSet):
 class FerramentaViewSet(viewsets.ModelViewSet):
 	queryset = Ferramenta.objects.all()
 	serializer_class = FerramentaSerializer
+
+class ClienteViewSet(viewsets.ModelViewSet):
+	queryset = Cliente.objects.all()
+	serializer_class = ClienteSerializer
 
 class ProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
 	queryset = Processo.objects.prefetch_related("macroProcesso_primario").prefetch_related("macroProcessos_vinculados").prefetch_related("parte").prefetch_related("direcionador").prefetch_related("ferramenta").prefetch_related("clientes").all()

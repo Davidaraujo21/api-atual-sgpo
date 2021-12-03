@@ -11,6 +11,7 @@ router.register(r'direcionadores', views.DirecionadorViewSet)
 router.register(r'entradas-saidas', views.EntradaSaidaViewSet)
 router.register(r'ferramentas', views.FerramentaViewSet)
 router.register(r'processos', views.ProcessoViewSet)
+router.register(r'clientes', views.ClienteViewSet)
 
 
 urlpatterns = [
