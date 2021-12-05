@@ -3,7 +3,7 @@ from django.db import models
 class Componente(models.Model):
     nome_componente = models.CharField(max_length = 200)
     objetivo = models.CharField(max_length = 200)
-    codigo = models.CharField(max_length=64, default = '', unique = True)
+    codigo = models.CharField(max_length=5, default = '', unique = True)
     TIPO_CHOICES = (
         ('finalistico', 'finalistico'),
         ('direcionador', 'direcionador'),
@@ -16,7 +16,7 @@ class Componente(models.Model):
 class MacroProcesso(models.Model):
     nome_macroprocesso = models.CharField(max_length = 200)
     objetivo = models.CharField(max_length = 200)
-    codigo = models.CharField(max_length=64, default = '', unique = True)
+    codigo = models.CharField(max_length=5, default = '', unique = True)
     componente_primario = models.ForeignKey('Componente', on_delete=models.CASCADE)
     componentes_vinculados = models.ManyToManyField('Componente', related_name='componentesVincAcess', blank=True)
     def __str__(self):
@@ -101,7 +101,7 @@ class Processo(models.Model):
     fronteiraDe = models.CharField(max_length = 200)
     fronteiraAte = models.CharField(max_length = 200)
     objetivo = models.TextField()
-    codigo = models.CharField(max_length=64, default = '', unique = True)
+    codigo = models.CharField(max_length=5, default = '', unique = True)
     proad = models.CharField(max_length = 12)
     versaop = models.IntegerField(default = 0)
     data_inicial_versao_processo =  models.DateTimeField(auto_now=True)
