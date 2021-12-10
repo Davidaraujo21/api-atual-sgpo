@@ -71,6 +71,7 @@ class ProcessoReadSerializer(serializers.ModelSerializer):
     parte = ParteSerializer(many=True)
     direcionador = DirecionadorSerializer(many=True)
     ferramenta = FerramentaSerializer(many=True)
+    clientes = ClienteSerializer(many=True)
 
     class Meta:
         model = Processo
