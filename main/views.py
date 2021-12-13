@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo, Cliente
-from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSaidaSerializer,FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer, ClienteSerializer
+from .models import Componente,MacroProcesso,Parte,Direcionador,Entrada,Saida,Ferramenta,Processo, Cliente
+from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSerializer, SaidaSerializer, FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer, ClienteSerializer
 from rest_framework import filters, viewsets, permissions
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -30,9 +30,13 @@ class DirecionadorViewSet(viewsets.ModelViewSet):
 	queryset = Direcionador.objects.all()
 	serializer_class = DirecionadorSerializer
 
-class EntradaSaidaViewSet(viewsets.ModelViewSet):
-	queryset = EntradaSaida.objects.all()
-	serializer_class = EntradaSaidaSerializer
+class EntradaViewSet(viewsets.ModelViewSet):
+	queryset = Entrada.objects.all()
+	serializer_class = EntradaSerializer
+
+class SaidaViewSet(viewsets.ModelViewSet):
+	queryset = Saida.objects.all()
+	serializer_class = SaidaSerializer
 
 class FerramentaViewSet(viewsets.ModelViewSet):
 	queryset = Ferramenta.objects.all()
@@ -43,7 +47,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
 	serializer_class = ClienteSerializer
 
 class ProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
-	queryset = Processo.objects.prefetch_related("macroProcesso_primario").prefetch_related("macroProcessos_vinculados").prefetch_related("parte").prefetch_related("direcionador").prefetch_related("ferramenta").prefetch_related("clientes").all()
+	queryset = Processo.objects.prefetch_related("macroProcesso_primario").prefetch_related("macroProcessos_vinculados").prefetch_related("parte").prefetch_related("direcionador").prefetch_related("ferramenta").prefetch_related("clientes").prefetch_related("entradas").prefetch_related("saidas").all()
 	read_serializer_class = ProcessoReadSerializer
 	write_serializer_class = ProcessoWriteSerializer
 	filter_backends = [filters.OrderingFilter, DjangoFilterBackend]

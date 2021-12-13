@@ -22,9 +22,6 @@ class MacroProcesso(models.Model):
     def __str__(self):
         return self.nome_macroprocesso
 
-#------------------------------------------------------------------------------------------
-#  classe referente a PARTES INTERESSADAS
-#------------------------------------------------------------------------------------------
 class Parte(models.Model):
     nomeParte = models.CharField(max_length = 200)
     sigla = models.CharField(max_length = 20)
@@ -43,9 +40,6 @@ class Parte(models.Model):
     def __str__(self):
         return self.nomeParte
 
-#------------------------------------------------------------------------------------------
-# Classe referente aos Direcionadores
-#------------------------------------------------------------------------------------------
 class Direcionador(models.Model):
     orgao = models.CharField(max_length = 200)
     numero = models.CharField(max_length = 200)
@@ -64,22 +58,25 @@ class Direcionador(models.Model):
     def __str__(self):
         return self.orgao
 
-#------------------------------------------------------------------------------------------
-#Classes referente a entradas e saídas
-#------------------------------------------------------------------------------------------
-class EntradaSaida(models.Model):
+class Entrada(models.Model):
     descricao = models.TextField()
     def __str__(self):
         return self.descricao
 
-#------------------------------------------------------------------------------------------
-# Classes referentes as ferramentas
-#------------------------------------------------------------------------------------------
+class Saida(models.Model):
+    descricao = models.TextField()
+    TIPO_CHOICES = (
+        ('Produto', 'Produto'),
+        ('Serviço', 'Serviço')
+    )
+    tipoSaida = models.CharField(max_length = 7, choices = TIPO_CHOICES)
+    def __str__(self):
+        return self.descricao
+
 class Ferramenta(models.Model):
     descricao = models.TextField()
     def __str__(self):
         return self.descricao
-
 
 class Cliente(models.Model):
     nome = models.CharField(max_length = 200)
@@ -112,7 +109,8 @@ class Processo(models.Model):
     macroProcessos_vinculados = models.ManyToManyField(MacroProcesso, related_name='macroProcessoVinc', blank=True)
     parte = models.ManyToManyField(Parte, related_name="processoParte")
     direcionador = models.ManyToManyField(Direcionador, related_name='processoDirecionador')
-    # entradaSaida = models.ManyToManyField(EntradaSaida, related_name='processoEntradaSaida')
+    entradas = models.ManyToManyField(Entrada, related_name="processoEntradas")
+    saidas = models.ManyToManyField(Saida, related_name="processoSaidas")
     ferramenta = models.ManyToManyField(Ferramenta, related_name='processoFerramenta')
     def __str__(self):
         return self.nome_processo

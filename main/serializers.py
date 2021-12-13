@@ -1,4 +1,4 @@
-from .models import Componente,MacroProcesso,Parte,Direcionador,EntradaSaida,Ferramenta,Processo, Cliente
+from .models import Componente,MacroProcesso,Parte,Direcionador,Entrada, Saida,Ferramenta,Processo, Cliente
 from rest_framework import serializers
 
 
@@ -42,11 +42,18 @@ class DirecionadorSerializer(serializers.ModelSerializer):
         model = Direcionador
         fields = '__all__'
 
-class EntradaSaidaSerializer(serializers.ModelSerializer):
+class EntradaSerializer(serializers.ModelSerializer):
 
     class Meta:
 
-        model = EntradaSaida
+        model = Entrada
+        fields = '__all__'
+
+class SaidaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Saida
         fields = '__all__'
 
 class FerramentaSerializer(serializers.ModelSerializer):
@@ -72,6 +79,8 @@ class ProcessoReadSerializer(serializers.ModelSerializer):
     direcionador = DirecionadorSerializer(many=True)
     ferramenta = FerramentaSerializer(many=True)
     clientes = ClienteSerializer(many=True)
+    entradas = EntradaSerializer(many=True)
+    saidas = SaidaSerializer(many=True)
 
     class Meta:
         model = Processo
