@@ -5,13 +5,16 @@ from rest_framework import filters, viewsets, permissions
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .mixins.read_e_write_serializers import ReadWriteSerializerMixin
-from .filtros import ProcessoFilter, MacroProcessoFilter
+from .filtros import ProcessoFilter, MacroProcessoFilter, ComponenteFilter
 
 
 class ComponenteViewSet(viewsets.ModelViewSet):
 	queryset = Componente.objects.all()
 	serializer_class = ComponenteSerializer
+	filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
+	filterset_class = ComponenteFilter
 	pagination_class = LimitOffsetPagination
+
 
 class MacroProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
 	queryset = MacroProcesso.objects.all()
