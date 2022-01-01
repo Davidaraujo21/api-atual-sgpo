@@ -17,15 +17,6 @@ stages:
   jobs:
   - deployment: VMDeploy
     displayName: app
-    environment:
-      name: Ambiente Sgpo
-      resourceType: VirtualMachine
-      tags: app
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo my first deployment
   - job: Build
     displayName: Build
     pool:
