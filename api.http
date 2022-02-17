@@ -1,0 +1,42 @@
+
+###### Testar requisições a api
+
+@base_url = http://localhost:8000/api
+
+###
+# @name login
+POST {{base_url}}/login/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "1234"
+}
+
+###
+# Token de acesso
+@token = {{login.response.body.access}}
+@token_refresh = {{login.response.body.refresh}}
+
+###
+GET {{base_url}}/componentes/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{base_url}}/macroprocessos/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{base_url}}/processos/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST {{base_url}}/refresh/
+Content-Type: application/json
+
+{
+    "refresh": "{{token_refresh}}"
+}
