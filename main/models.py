@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 class Componente(models.Model):
     nome_componente = models.CharField(max_length = 200)
@@ -60,6 +61,7 @@ class Direcionador(models.Model):
 
 class Entrada(models.Model):
     descricao = models.TextField()
+    arquivo = models.FileField(null=True, upload_to='arquivos/%Y/%m/%d/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     def __str__(self):
         return self.descricao
 
