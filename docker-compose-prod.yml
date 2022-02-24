@@ -10,13 +10,16 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
   api:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile-prod
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic && 
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
+      - static_volume:/home/app/api/staticfiles
     ports:
       - "8000:8000"
     environment:
@@ -27,4 +30,12 @@ services:
       - ./.env.prod
     depends_on:
       - db
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/api/staticfiles
+    depends_on:
+      - api
+    
+
     
