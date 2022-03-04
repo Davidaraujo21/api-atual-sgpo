@@ -1,5 +1,7 @@
-from .models import Componente,MacroProcesso,Parte,Direcionador,Entrada, Saida,Ferramenta,Processo, Cliente
+from .models import Componente,MacroProcesso,Parte,Direcionador,Entrada, Saida,Ferramenta,Processo, Cliente, UsuarioInstitucional, UsuarioTematico
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth.models import User
 
 
 class ComponenteSerializer(serializers.ModelSerializer):
@@ -96,5 +98,27 @@ class ProcessoWriteSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 
+def get_usuario_tipo(usuario):
+    try:
+        institucional = UsuarioInstitucional.objects.filter(usuario=usuario).get()
+        return 1
+    except:
+        pass
+    try:
+        tematico = UsuarioTematico.objects.filter(usuario=usuario).get()
+        return 2
+    except:
+        pass
+    return 0
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        usuario = User.objects.filter(username=user.username, password=user.password).get()
+        tipo_usuario = get_usuario_tipo(usuario)
+        token['username'] = user.username
+        token['tipo_usuario'] = tipo_usuario
+        return token
 
