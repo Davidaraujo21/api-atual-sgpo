@@ -13,4 +13,11 @@ COPY requirements.txt .
 
 RUN pip install  -r requirements.txt
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' /code/entrypoint.sh
+RUN chmod +x /code/entrypoint.sh
+
 COPY . .
+
+ENTRYPOINT ["/code/entrypoint.sh"]

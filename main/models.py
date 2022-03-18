@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.contrib.auth.models import User
 
 class Componente(models.Model):
     nome_componente = models.CharField(max_length = 200)
@@ -100,6 +101,11 @@ class Processo(models.Model):
     fronteiraDe = models.CharField(max_length = 200)
     fronteiraAte = models.CharField(max_length = 200)
     objetivo = models.TextField()
+    STATUS_CHOICES = (
+        ('Em Aberto', 'Em Aberto'),
+        ('Finalizado', 'Finalizado')
+    )
+    statusProcesso = models.CharField(max_length=10, choices=STATUS_CHOICES, blank=True) 
     codigo = models.CharField(max_length=5, default = '', unique = True)
     proad = models.CharField(max_length = 12)
     versaop = models.IntegerField(default = 0)
@@ -117,5 +123,32 @@ class Processo(models.Model):
     def __str__(self):
         return self.nome_processo
 
+
+########################## Tipos de usuário ###########################
+
+class TiposUsuario(models.Model):
+    descricao = models.CharField(max_length=255)
+    def __str__(self):
+        return self.descricao
+
+###################### Usuários ############################
+
+class UsuarioInstitucional(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    tipo_usuario = models.ForeignKey(TiposUsuario, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.usuario.username
+
+class UsuarioTematico(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    tipo_usuario = models.ForeignKey(TiposUsuario, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.usuario.username
 
 

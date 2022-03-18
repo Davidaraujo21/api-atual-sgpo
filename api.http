@@ -9,8 +9,8 @@ POST {{base_url}}/login/
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "1234"
+    "username": "user2",
+    "password": "defaultpassword2"
 }
 
 ###

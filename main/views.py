@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from .models import Componente,MacroProcesso,Parte,Direcionador,Entrada,Saida,Ferramenta,Processo, Cliente
-from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSerializer, SaidaSerializer, FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer, ClienteSerializer
+from .serializers import ComponenteSerializer, MacroprocessoReadSerializer, MacroprocessoWriteSerializer, ParteSerializer, DirecionadorSerializer, EntradaSerializer, SaidaSerializer, FerramentaSerializer, ProcessoReadSerializer, ProcessoWriteSerializer, ClienteSerializer, CustomTokenObtainPairSerializer
 from rest_framework import filters, viewsets, permissions
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .mixins.read_e_write_serializers import ReadWriteSerializerMixin
 from .filtros import ProcessoFilter, MacroProcessoFilter, ComponenteFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class ComponenteViewSet(viewsets.ModelViewSet):
 	queryset = Componente.objects.all()
@@ -68,3 +69,5 @@ class ProcessoViewSet(ReadWriteSerializerMixin ,viewsets.ModelViewSet):
 	pagination_class = LimitOffsetPagination
 
 
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
